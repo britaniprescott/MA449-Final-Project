@@ -1,0 +1,349 @@
+\documentclass[14pt]{beamer}
+\hypersetup{pdfpagemode=FullScreen}
+\usepackage[utf8]{inputenc}
+
+% Title slide
+\title{Probabilities and Gambler's Ruin}
+\author{Britani Prescott}
+\date{November 19, 2019}
+
+\usepackage{comment}
+
+\begin{document}
+
+% Includes title slide in document
+\frame{\titlepage}
+
+% New Slide - Introducing the classical gambler's ruin problem
+\begin{frame}{The Classical Gambler's Ruin Game [1]}
+ \begin{itemize}
+     \item Flip a coin and win \$1 if it's heads and lose \$1 if it's tails
+     \item The probabilities of winning and losing are both $\frac{1}{2}$
+     \item Then the expected net gain of the game, on average, is $\left( \frac{1}{2} \right)(1) + \left( \frac{1}{2} \right)(-1) = 0$, meaning a single coin-flipping game is fair
+ \end{itemize}
+\end{frame}
+
+% New Slide - Introducing the variation of the classical gambler's ruin problem
+\begin{frame}{A Variation of the Classical Gambler's Ruin Game [1]}
+ \begin{itemize}
+     \item Roll a die and 
+     \begin{itemize}
+         \item (A) win \$2 if it's a 1 or a 2
+         \item (B) lose \$1 otherwise
+     \end{itemize}
+     \item Then the probabilities of each outcome are 
+     \begin{itemize}
+         \item $P(\text{A}) = \frac{1}{3}$
+         \item $P(\text{B}) = \frac{2}{3}$
+     \end{itemize}
+     \item Then the expected net gain of the game, on average, is $\left( \frac{1}{3} \right)(2) + \left( \frac{2}{3} \right)(-1) = 0$, meaning a single game die-rolling game is also fair
+ \end{itemize}   
+\end{frame}
+
+% New Slide - Definitions and formulas needed to understand the gambler's ruin problem
+\begin{frame}{Definitions and Formulas Used When Describing the Gambler's Ruined Problem [1]}
+ \begin{itemize}
+     \item A gambler beginning with \$5 hopes to double his money by the end of the day. He will play one of the previously described games until he doubles his money or loses all of it.  This is called a \textit{double-or-nothing strategy}.
+     \item The values at which the gambler will stop with this strategy (0 or 10 for the coin-flipping game and 0, 10, or 11 for the die-rolling game) are called \textit{stopping values}
+ \end{itemize}  
+\end{frame}
+
+% New Slide
+\begin{frame}{A Few Things to Note About the Coin-Flipping and Die-Rolling Game [1]}
+ \begin{itemize}
+     \item In both the coin-flipping and die-rolling games, a single game is fair
+     \item For the coin-flipping game, it turns out that
+          \begin{enumerate}
+            \item The double-or-nothing strategy is also fair
+            \item The gambler's probabilities of ruin and success with the double-or-nothing strategy are both $\frac{1}{2}$
+            \end{enumerate}
+     \item Are the above statements still true with a double-or-nothing strategy for the die-rolling game?
+     \item Recurrence relations will be used to find the answer to this
+ \end{itemize}
+\end{frame}
+
+% New Slide
+\begin{comment}
+\begin{frame}{Approach for Comparing the Double-or-Nothing Strategy for Coin-Flipping and Die-Rolling Games [1]}
+ \begin{itemize}
+     \item Consider the following questions:
+         \item The die-rolling game is also fair when played as a single game, but is it still fair when played with a double-or-nothing strategy?
+         \item Does the gambler have equal chances of being successful and being ruined with this strategy?
+ \end{itemize}
+\end{frame}
+
+% New Slide - Comparing the classical gambler's ruin problem to variations of it
+\begin{frame}{How Does the Die-Rolling Variation of the Gambler's Ruin Problem Compare to Classical Version? [1]}
+ \begin{itemize}
+     \item Consider the following questions:
+         \item The die-rolling game is also fair when played as a single game, but is it still fair when played with a double-or-nothing strategy?
+         \item Does the gambler have equal chances of being successful and being ruined with this strategy?
+ \end{itemize}
+\end{frame}
+\end{comment}
+
+% New Slide - Initial information for solution to 1/3 vs 2/3 game
+\begin{frame}{Introducing the Problem [1]}
+ \begin{itemize}
+     \item A gambler begins his day with a fortune of \$5
+     \item He will play the die-rolling game previously described in which he gains \$2 with a probability of $\frac{1}{3}$ and loses \$1 with a probability of $\frac{2}{3}$ with a double-or-nothing strategy
+     \item This means he will continue playing as long as he has not doubled his fortune or lost it, i.e. as long as he has at least \$1 and no more than \$9
+     \begin{itemize}
+         \item Then his stopping values are 0, 10, and 11 since he can lose his last \$1 or gain \$2 while having either \$8 or \$9
+     \end{itemize}
+     \item The gambler is successful if he reaches \$10 or \$11 and ``ruined" if he reaches \$0
+ \end{itemize}   
+\end{frame}
+
+% New Slide - Defining Variables and Probabilities
+\begin{frame}{Defining Variables \& Functions [1]}
+ \begin{itemize}
+     \item Let \$$N$ be the amount of money the gambler has at some point during gambling day, where $0 \leq N \leq 11$
+     \item Let $k = 0, 10, 11$ be the possible stopping values
+     \item Let the probability that the gambler will eventually end up with \$$k$ given that he currently has \$$N$ be defined by $P^{(k)}_N$
+     \item From the article, when $N = 0, 10, \text{ or } 11$ and $k = 0, 10, \text{ or } 11$, the initial values of $P^{(k)}_N$ can be defined by the following piece-wise function:
+        $$P^{(k)}_N = 
+        \left\{
+        \begin{array}{ccc}
+        1 & \text{ if } & N = k \\
+        0 & \text{ if } & N \neq k \\
+        \end{array}
+        \right.$$
+ \end{itemize}
+\end{frame}
+
+% New Slide - Defining Probabilities of Ruin & Success
+\begin{frame}{Defining Probabilities of Ruin \& Success [1]}
+ \begin{itemize}
+     \item Let the probability that the gambler eventually ends up with \$10 be defined by $P^{(10)}_N$
+     \item Let the probability that the gambler eventually ends up with \$11 be defined by $P^{(11)}_N$
+     \item Then the probability that the gambler is successful in doubling his \$5 is $P^{(10)}_N + P^{(11)}_N$
+     \item Let the probability that the gambler is ruined, i.e. he eventually ends up with \$0, be defined by $P^{(0)}_N$
+ \end{itemize}  
+\end{frame}
+
+% New Slide - Creating a Recurrence Relation from the Defined Variables & Probabilities
+\begin{frame}{Using Recurrence Relations to Find Probabilities of Ruin \& Success [1]}
+ \begin{itemize}
+     \item Recall that the gambler must have between \$1 and \$9, inclusively, if he is starting a game
+     \item Also recall that the gambler has a 1 in 3 chance of winning \$2 and a 2 in 3 chance of losing \$1
+     \item With this information, the authors derive the following recurrence relation:
+     $$P^{(k)}_N = 1/3P^{(k)}_{N+2} + 2/3P^{(k)}_{N-1} \text{ for } 1 \leq N \leq 9$$
+ \end{itemize}
+\end{frame}
+
+% New Slide - Information for solving characteristic polynomials
+\begin{frame}{Using Characteristic Equations to Solve Recurrence Relations [2]}
+ \begin{itemize}
+     \item Let $a_n = c_{n-1}a_{n-1} + c_{n-2}a_{n-2}$ be a linear homogeneous recurrence relation with constant coefficients
+     \item Let $x_{n-2} = a_{n-2} \text { for some } n \in \mathbb{Z} \text{ and } x \in \mathbb{R}$
+     \item Then the recurrence relation $a_n = c_{n-1}a_{n-1} + c_{n-2}a_{n-2}$ becomes the characteristic equation
+        \begin{align}
+            x^2 &= c_{n-1}x + c_{n-2} \\
+            \implies x^2 - c_{n-1}x - c_{n-2} &= 0
+        \end{align}
+ \end{itemize} 
+\end{frame}
+
+% New Slide - Information for solving characteristic polynomials
+\begin{frame}{Using Characteristic Equations to Solve Recurrence Relations [2]}
+ \begin{itemize}
+     \item Solve the characteristic equation (2) from the previous slide
+     \item If this equation has two distinct real roots $x = r_1, x = r_2$, \text{ then } $a_{n} = ar_{1}^{n} + br_{2}^{n}$ is a solution, $a,b \in \mathbb{R}$
+     \item If this equation has a double real root $x = r$, $a_{n} = cr^{n} + ndr^{n}$ is a solution, $c,d \in \mathbb{R}$
+     \item In either case, $a,b$ or $c,d$ can be solved with the initial conditions of the recurrence relation
+ \end{itemize} 
+\end{frame}
+
+% New Slide - Finding the characteristic equation
+\begin{frame}{The Characteristic Equation for the Die-Rolling Game [1]}
+ \begin{itemize}
+     \item Note that $P^{(k)}_N = \frac{1}{3}P^{(k)}_{N+2} + \frac{2}{3}P^{(k)}_{N-1}$ is a linear homogeneous recurrence relation with constant coefficients
+     \item Let $P^{(k)}_N = x^N$ for some $N \in \mathbb{Z}$
+     \item Then the characteristic equation is 
+        \begin{align}
+            P^{(k)}_N &= \frac{1}{3}P^{(k)}_{N+2} + \frac{2}{3}P^{(k)}_{N-1} \\
+            \implies x^N &= \frac{1}{3} x^{N+2} + \frac{2}{3} x^{N-1} \\
+            \implies x &= \frac{1}{3} x^3 + \frac{2}{3}
+\end{align}
+ \end{itemize}
+\end{frame}
+
+% New Slide
+\begin{frame}{Solving the Characteristic Equation for the Die-Rolling Game [1]}
+ \begin{itemize}
+     \item Factoring the characteristic equation (5) from the previous slide gives 
+     $$0 = (1/3)(x - 1)^2(x + 2)$$
+     \item Then $x = 1$ is a repeated root and $x = -2$ is a distinct root
+     \item This gives us three solutions to the above characteristic equation:
+        \begin{align}
+            P^{(k)}_N = 1^N &= 1 \\
+            P^{(k)}_N = N \cdot 1^N = N \cdot 1 &= N \\
+            P^{(k)}_N &= (-2)^N
+        \end{align}
+ \end{itemize} 
+\end{frame}
+
+% New Slide
+\begin{frame}{A Linear Combination From the Solutions to the Characteristic Equation [1]}
+ \begin{itemize}
+     \item The solutions on the previous slide allow us to create the following linear combination with $k=0,10,11$:
+     \begin{align}
+        P^{(0)}_N &= x_{11} \cdot 1 + x_{12} \cdot N + x_{13} \cdot (-2)^N \\
+        P^{(10)}_N &= x_{21} \cdot 1 + x_{22} \cdot N + x_{23} \cdot (-2)^N \\
+        P^{(11)}_N &= x_{31} \cdot 1 + x_{32} \cdot N + x_{33} \cdot (-2)^N
+     \end{align}
+     \item Each $x_i$ value is a real number that can be calculated by using the initial conditions of the recurrence relation
+ \end{itemize} 
+\end{frame}
+
+% New Slide
+\begin{frame}{Using the Initial Conditions to Find the Values of $x_i$ [1]}
+ \begin{itemize}
+     \item Recall the piece-wise function from earlier for $N=0,10,11$ and $k=0,10,11$. These are our initial conditions for the recurrence relation.
+        $$P^{(k)}_N = 
+        \left\{
+        \begin{array}{ccc}
+        1 & \text{ if } & N = k \\
+        0 & \text{ if } & N \neq k \\
+        \end{array}
+        \right.$$
+     \item This means the following equations are true:
+     $$P^{(0)}_{0} = x_{11} \cdot 1 + x_{12} \cdot 0 + x_{13} \cdot (-2)^{0}
+        = 1$$
+     $$P^{(10)}_{10} = x_{21} \cdot 1 + x_{22} \cdot 10 + x_{23} \cdot (-2)^{10}
+        = 1$$
+     $$P^{(11)}_{11} = x_{31} \cdot 1 + x_{32} \cdot 11 + x_{33} \cdot (-2)^{11} 
+        = 1$$
+ \end{itemize}  
+\end{frame}
+
+% New Slide
+\begin{frame}{A Matrix Equation from a Linear Combination [1]}
+ \begin{itemize}
+     \item The initial conditions and system of equations from the previous slide allows for the following matrix equation:
+        $$
+        \begin{bmatrix}
+        x_{11} & x_{12} & x_{13} \\
+        x_{21} & x_{22} & x_{23} \\
+        x_{31} & x_{32} & x_{33} \\
+        \end{bmatrix}
+        \cdot
+        \begin{bmatrix}
+        1 & 1 & 1 \\
+        0 & 10 & 11 \\
+        1 & 1024 & -2048 \\
+        \end{bmatrix}
+        =
+        \begin{bmatrix}
+        1 & 0 & 0 \\
+        0 & 1 & 0 \\
+        0 & 0 & 1 \\
+        \end{bmatrix}
+        $$
+ \end{itemize}
+\end{frame}
+
+% New Slide
+\begin{frame}{Solving the Matrix Equation [1]}
+ \begin{itemize}
+     \item The solution to the previously defined matrix equation is
+     \begin{align}
+    \begin{bmatrix}
+     x_{11} & x_{12} & x_{13} \\
+     x_{21} & x_{22} & x_{23} \\
+     x_{31} & x_{32} & x_{33} \\
+    \end{bmatrix}
+     &=
+    \begin{bmatrix}
+     1 & 1 & 1 \\
+     0 & 10 & 11 \\
+     1 & 1024 & -2048 \\
+     \end{bmatrix}^{-1} \\
+     &=
+     \frac{1}{31743}
+     \begin{bmatrix}
+     31744 & -3072 & -1 \\
+     -11 & 2049 & 11 \\
+     10 & 1023 & -10 \\
+    \end{bmatrix}
+\end{align}
+ \end{itemize}
+\end{frame}
+
+% New Slide
+\begin{frame}{Putting the $x_i$ Values into the Original Linear Combination [1]}
+ \begin{itemize}
+    \item Replacing all values of $x_i$ with their corresponding values gives us the following probability functions:
+    $$P^{(0)}_N 
+        = \frac{1}{31743}[(31744) \cdot 1 + (-3072) \cdot N + (-1) \cdot (-2)^N]$$
+    $$P^{(10)}_N 
+        = \frac{1}{31743}[(-11) \cdot 1 + (2049) \cdot N + (11) \cdot (-2)^N]$$
+    $$P^{(11)}_N 
+        = \frac{1}{31743}[(10) \cdot 1 + (1023) \cdot N + (-10) \cdot (-2)^N]$$
+ \end{itemize}
+\end{frame}
+
+% New Slide
+\begin{frame}{Calculating the Probabilities for the $\$N=\$5$ Die-Rolling Game [1]}
+ \begin{itemize}
+     \item We can calculate the desired probabilities when $\$N=\$5$ by plugging in $N=5$ to the probability functions on the preceding slide:
+     $$P^{(0)}_{5} = \frac{1824}{3527}$$
+$$P^{(10)}_{5} = \frac{1098}{3527}$$
+$$P^{(11)}_{5} = \frac{605}{3527}$$
+ \end{itemize}  
+\end{frame}
+
+% New Slide
+\begin{frame}{Probabilities of Success and Ruin in the Die-Rolling Game [1]}
+ \begin{itemize}
+     \item The probability of ruin is
+     $$P^{(0)}_{5} = \frac{1824}{3527} \approx 0.517153$$ 
+     \item The probability of success is
+     $$P^{(10)}_{5} + P^{(11)}_{5} = \frac{1098}{3527} + \frac{605}{3527} = \frac{1703}{3527} \approx 0.482847$$
+     \item This shows that the gambler is slightly more likely to be ``ruined" than successful
+ \end{itemize}
+\end{frame}
+
+% New Slide
+\begin{frame}{Fairness of the Die-Rolling Game with a Double-or-Nothing Strategy}
+ \begin{itemize}
+     \item If a gambler were to use the double-or-nothing strategy of the die-rolling game over and over, his expected net gain would be
+     $$ \left( \frac{1824}{3527} \right)(-5) + \left( \frac{1098}{3527} \right)(+5) + \left( \frac{605}{3527} \right)(+6) = 0$$
+     \item This means that the double-or-nothing strategy for the die-rolling game is fair
+ \end{itemize}
+\end{frame}
+
+% New Slide
+\begin{frame}{Comparing the Results}
+ \begin{itemize}
+     \item For both the die-rolling and coin-flipping games, a single game was fair
+     \item For both of these games, the double-or-nothing strategy is also fair
+     \item Also, probabilities of ruin and success for the double-or-nothing strategy with the coin-flipping are both 1/2
+     \item However, the probabilities of ruin and success for the double-or-nothing strategy with the die-rolling game are about .52 and .48, respectively
+ \end{itemize}
+\end{frame}
+
+% New Slide
+\begin{frame}{Some Questions to Consider}
+ \begin{itemize}
+     \item Why is the probability of success in the double-or-nothing strategy almost .2 higher than the probability of success in a single game?
+     \item How may these probabilities change with varying ``fortunes"?
+     \item What would happen if we swapped the rules of the die-rolling game in such a way that the gambler would, on average, win \$1 two-thirds of the time and lose \$2 one-third of the time?
+ \end{itemize}
+\end{frame}
+
+\begin{frame}{References}
+\begin{thebibliography}{9}
+\bibitem{gambler's ruin}
+[1] James D. Harper and Kenneth A. Ross, 
+\textit{Stopping Strategies and Gambler's Ruin}.
+Mathematics Magazine, Vol. 78, No. 4 (October 2005) p. 255-268.
+
+\bibitem{characteristic equations to solve recurrence relations}
+[2] Oscar Levin, 
+\textit{Discrete Mathematics: An Open Introduction}.
+\end{thebibliography}
+\end{frame}
+
+\end{document}
